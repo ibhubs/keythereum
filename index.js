@@ -515,6 +515,7 @@ module.exports = {
    */
   generateKeystoreFilename: function(address) {
     var filename = 'UTC--' + new Date().toISOString() + '--' + address
+    filename = filename.split(':').join('-')
 
     // Windows does not permit ":" in filenames, replace all with "-"
     if (process.platform === 'win32') filename = filename.split(':').join('-')

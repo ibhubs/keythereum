@@ -25,8 +25,7 @@ function keccak256(buffer) {
 module.exports = {
   version: '0.5.2',
 
-  browser:
-    typeof process === 'undefined' ||
+  browser: typeof process === 'undefined' ||
     !process.nextTick ||
     Boolean(process.browser),
 
@@ -205,8 +204,7 @@ module.exports = {
    * @return {buffer} Secret key derived from password.
    */
   deriveKey: function(password, salt, options, cb) {
-    var prf,
-      self = this
+    var prf, self = this
     if (typeof password === 'undefined' || password === null || !salt) {
       throw new Error('Must provide password and salt to derive a key')
     }
@@ -459,12 +457,7 @@ module.exports = {
    * @return {buffer} Plaintext private key.
    */
   recover: function(password, keyObject, cb) {
-    var keyObjectCrypto,
-      iv,
-      salt,
-      ciphertext,
-      algo,
-      self = this
+    var keyObjectCrypto, iv, salt, ciphertext, algo, self = this
     keyObjectCrypto = keyObject.Crypto || keyObject.crypto
 
     // verify that message authentication codes match, then decrypt
@@ -514,12 +507,13 @@ module.exports = {
    * @return {string} Keystore filename.
    */
   generateKeystoreFilename: function(address) {
+    var extension = '.txt'
     var filename = 'UTC--' + new Date().toISOString() + '--' + address
     filename = filename.split(':').join('-')
-
+    filename = filename.split('.').join('-')
     // Windows does not permit ":" in filenames, replace all with "-"
     if (process.platform === 'win32') filename = filename.split(':').join('-')
-
+    filename = filename + extension
     return filename
   },
 
@@ -599,10 +593,8 @@ module.exports = {
     var keyStoreFolderPath = path.join(datadir, 'keystore')
 
     function findKeyfile(keystore, address, files) {
-      var i,
-        len,
-        filepath = null
-      for (i = 0, len = files.length; i < len; ++i) {
+      var i, len, filepath = null
+      for ((i = 0), (len = files.length); i < len; ++i) {
         if (files[i].indexOf(address) > -1) {
           filepath = path.join(keyStoreFolderPath, files[i])
           // if (fs.lstatSync(filepath).isDirectory()) {
